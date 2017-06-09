@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jrdcom.com.justtest.MainActivity">
+    android:orientation="vertical"
+    >
 
     <Button
         android:id="@+id/btn_simple_factory"
@@ -30,9 +29,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="代理"/>
+
     <Button
         android:id="@+id/btn_factory_method"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="工厂方法模式"/>
+
+    <Button
+        android:id="@+id/btn_prototype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="原型模式"/>
+
+    <Button
+        android:id="@+id/btn_template"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="模板模式"/>
+    <Button
+        android:id="@+id/btn_builder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="建造者模式"/>
+    <Button
+        android:id="@+id/btn_observer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="观察者模式"/>
+    <Button
+        android:id="@+id/btn_abstract_factory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="抽象工厂模式"/>
 </LinearLayout>

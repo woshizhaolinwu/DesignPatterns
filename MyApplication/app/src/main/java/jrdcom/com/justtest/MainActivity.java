@@ -11,12 +11,22 @@ import jrdcom.com.justtest.Decoration.Finery;
 import jrdcom.com.justtest.Decoration.Person;
 import jrdcom.com.justtest.Decoration.TShitFinery;
 import jrdcom.com.justtest.FactoryMethod.FactoryOperatorAdd;
+import jrdcom.com.justtest.Observer.Boss;
+import jrdcom.com.justtest.Observer.NbaObserver;
+import jrdcom.com.justtest.Observer.ObserverSuper;
+import jrdcom.com.justtest.Observer.Secretary;
+import jrdcom.com.justtest.Observer.StockObserver;
+import jrdcom.com.justtest.Observer.Subject;
+import jrdcom.com.justtest.Prototype.PersonResume;
 import jrdcom.com.justtest.Proxy.Sender;
 import jrdcom.com.justtest.Proxy.SenderProxy;
 import jrdcom.com.justtest.ShippingMale.ShippingFactory;
 import jrdcom.com.justtest.ShippingMale.ShippingSuper;
 import jrdcom.com.justtest.SimpleFactory.Operator;
 import jrdcom.com.justtest.SimpleFactory.OperatorFactory;
+import jrdcom.com.justtest.Template.TestA;
+import jrdcom.com.justtest.Template.TestB;
+import jrdcom.com.justtest.Template.TestSuper;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "zlwu";
@@ -25,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_decorate;
     private Button btn_proxy;
     private Button btn_factory_method;
+    private Button btn_prototype;
+    private Button btn_template;
+    private Button btn_builder;
+    private Button btn_observer;
+    private Button btn_abstract_factory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +62,20 @@ public class MainActivity extends AppCompatActivity {
         //工厂方法模式
         btn_factory_method = (Button)findViewById(R.id.btn_factory_method);
         btn_factory_method.setOnClickListener(onClickListener);
+
+        //原型模式
+        btn_prototype = (Button)findViewById(R.id.btn_prototype);
+        btn_prototype.setOnClickListener(onClickListener);
+
+        //模板模式
+        btn_template = (Button)findViewById(R.id.btn_template);
+        btn_template.setOnClickListener(onClickListener);
+
+        //建造者模式
+
+        //观察者模式
+        btn_observer = (Button)findViewById(R.id.btn_observer);
+        btn_observer.setOnClickListener(onClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -95,6 +124,43 @@ public class MainActivity extends AppCompatActivity {
                     int num =  operator1.calculate(100,200);
                     Log.d(JrdCommon.TAG, "the number is"+num);
                     break;
+
+                case R.id.btn_prototype:
+                    PersonResume personResume = new PersonResume("wuzhaolin");
+                    personResume.setPersonSchool("nanjing");
+                    PersonResume personResume1= personResume.clone();
+                    personResume1.setPersonName("jiaruilin");
+                    personResume1.setPersonSchool("beijing");
+                    break;
+
+                case R.id.btn_template:
+                    //Student A
+                    TestSuper testA = new TestA();
+                    testA.test1();
+                    testA.test2();
+
+                    //Student B
+                    TestSuper testB = new TestB();
+                    testB.test1();
+                    testB.test2();
+                    break;
+
+                case R.id.btn_observer:
+                    //秘书
+                    Subject secretary = new Secretary();  //秘书类也是实体类，解耦也需要定义
+                    ObserverSuper observerSuper = new StockObserver("wuzhaolin");
+                    secretary.attachObserver(observerSuper);   //两个类直接有直接耦合
+                    secretary.attachObserver(new NbaObserver("jiaruilin"));
+                    secretary.bossStatus();
+
+                    //Boss
+                    Subject boss = new Boss();
+                    boss.attachObserver(new StockObserver("wuzhaolin"));
+                    boss.attachObserver(new NbaObserver("jiaruilin"));
+                    boss.bossStatus();
+                    break;
+
+
             }
         }
     };
