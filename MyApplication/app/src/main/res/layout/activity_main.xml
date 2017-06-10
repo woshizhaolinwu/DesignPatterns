@@ -62,4 +62,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="抽象工厂模式"/>
+    <Button
+        android:id="@+id/btn_composite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="组合模式"/>
+    <Button
+        android:id="@+id/btn_command"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="命令模式"/>
+    <Button
+        android:id="@+id/btn_responsibility"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="职责链模式"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package jrdcom.com.justtest.AbstractFactory;
+package jrdcom.com.justtest.AbstractFactory.IUser;
 
 /**
  * Created by longcheng on 2017/6/9.

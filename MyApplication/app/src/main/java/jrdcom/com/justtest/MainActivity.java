@@ -6,6 +6,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import jrdcom.com.justtest.AbstractFactory.DataAccess;
+import jrdcom.com.justtest.AbstractFactory.IDepartment.DepartMent;
+import jrdcom.com.justtest.AbstractFactory.IDepartment.IDepartMentServerInterface;
+import jrdcom.com.justtest.AbstractFactory.IUser.ServerUserSuper;
+import jrdcom.com.justtest.AbstractFactory.SqlServerFactory;
+import jrdcom.com.justtest.AbstractFactory.SqlServerInterface;
+import jrdcom.com.justtest.AbstractFactory.IUser.User;
+import jrdcom.com.justtest.Command.BarJi;
+import jrdcom.com.justtest.Command.BarYang;
+import jrdcom.com.justtest.Command.Barbecur;
+import jrdcom.com.justtest.Command.Waiter;
+import jrdcom.com.justtest.Composite.Compoment;
+import jrdcom.com.justtest.Composite.Composite;
+import jrdcom.com.justtest.Composite.Left;
 import jrdcom.com.justtest.Decoration.BigTrouser;
 import jrdcom.com.justtest.Decoration.Finery;
 import jrdcom.com.justtest.Decoration.Person;
@@ -40,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_builder;
     private Button btn_observer;
     private Button btn_abstract_factory;
+    private Button btn_composite;
+    private Button btn_command;
+    private Button btn_responsibility;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +93,18 @@ public class MainActivity extends AppCompatActivity {
         //观察者模式
         btn_observer = (Button)findViewById(R.id.btn_observer);
         btn_observer.setOnClickListener(onClickListener);
+
+        //抽象工厂模式
+        btn_abstract_factory = (Button)findViewById(R.id.btn_abstract_factory);
+        btn_abstract_factory.setOnClickListener(onClickListener);
+
+        //组合模式
+        btn_composite = (Button)findViewById(R.id.btn_composite);
+        btn_composite.setOnClickListener(onClickListener);
+
+        //职责链模式
+        btn_responsibility = (Button)findViewById(R.id.btn_responsibility);
+        btn_responsibility.setOnClickListener(onClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -160,7 +189,65 @@ public class MainActivity extends AppCompatActivity {
                     boss.bossStatus();
                     break;
 
+                case R.id.btn_abstract_factory://抽象工厂模式
+                    /*step 1,高度耦合*/
+                    /*SqlserverUser sqlserverUser = new SqlserverUser();
+                    User user = new User("wuzhaolin","1");
+                    sqlserverUser.insert(user);
+                    User user1 = sqlserverUser.get("1");*/
 
+                    /*step 2,使用工厂方法, 这样只要替换工厂即可*/
+                    SqlServerInterface serverInterface = new SqlServerFactory();
+                    ServerUserSuper serverUserSuper = serverInterface.CreateServerUser();
+                    User user = new User("wuzhaolin","2");
+                    serverUserSuper.insert(user);
+
+                    /*Setp 3,在工厂方法的基础上添加Dempartment表*/
+                    SqlServerInterface serverInterface1 = new SqlServerFactory();//sql server 工厂
+                    IDepartMentServerInterface iDepartMentServerInterface = serverInterface1.CreateDepartment();
+                    DepartMent departMent = new DepartMent("TCL","2");
+                    iDepartMentServerInterface.insertDepartMent(departMent);
+                    iDepartMentServerInterface.getDepartMent("2");
+
+                    /*Step 4,通过简单工厂的方式来决定使用的数据库*/
+                    DataAccess dataAccess = new DataAccess();
+                    dataAccess.CreateDepartment();
+
+                    dataAccess.CreateServerUser();
+                    break;
+
+                case R.id.btn_composite:
+                    Compoment root = new Composite();
+                    root.add(new Left());
+                    root.add(new Left());
+
+                    Compoment com = new Composite();
+                    com.add(new Left());
+                    com.add(new Left());
+                    root.add(com);
+                    break;
+
+                case R.id.btn_command:
+                    //Step1：采用路边摊的方法， 客户直接面对烤肉这
+                    Barbecur barbecur = new Barbecur();
+                    barbecur.BarJi();
+                    barbecur.BarYang();
+                    //Step2: 采用门店的方法， 中间有服务员
+                    /*
+                    *  客户发起指令， 烤什么
+                    *  服务员： 接收指令，并管理菜单，通知执行
+                    *  烤肉师父：接收烤肉命令
+                    * */
+                    Barbecur barbecur1= new Barbecur();
+                    Waiter waiter = new Waiter();
+                    waiter.add(new BarYang(barbecur1));
+                    waiter.add(new BarJi(barbecur1));
+                    waiter.bar();
+                    break;
+
+                case R.id.btn_responsibility:       //职责链模式
+
+                    break;
             }
         }
     };
